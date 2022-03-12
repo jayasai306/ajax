@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+<title>AJAX EXAMPLE</title>
+</head>
+<body>
+<script type="text/javascript" >
+var xmlHttp=new XMLHttpRequest();
+if(!xmlHttp){alert(object cannot be created);}
+function process()
+{
+	if(xmlHttp.readyState == 0 || xml.readyState == 4){
+		var brand= document.getElementById("userInput").value;
+		xmlHttp.open("GET","store.php?brand=" + brand,true);
+		xmlHttp.onreadystatechange=handleServerResponse();
+		xmlHttp.send();
+		
+	}else{
+		setTimeout('process()',1000);
+	}
+}
+
+function handleServerResponse(){
+	if(xmlHttp.readyState==4){
+		if(xmlHttp.status==200) {
+			xmlResponse=xmlHttp.responseXML;
+			xmlDocumentElement = xmlResponse.documentElement;
+			var message = xmlDocumentElement.firstChild.data;
+
+			document.getElementById("output").innerHTML='<span style="color:blue">' + message + '</span>';
+			setTimeout('process()',1000);
+		}
+	}
+}
+</script>
+<center>
+<h1><i>welcome guyzz lets shop!</i></h1>
+<input type="text" name="userInput">
+<p style="color:red">enter a brand name.</p>
+<br><br>
+<br><br>
+<div id="output"></div>
+</center>
+
+</body>
+</html>
